@@ -1,0 +1,5 @@
+BRING UP CLUSTER
+
+cloud up
+cloud inv > inventory.yaml
+ansible-playbook -i inventory.yaml docker-swarm.yaml

@@ -1,0 +1,65 @@
+version: '3'
+
+project: swarm
+
+guests:
+
+  node1:
+    hostname: node1
+    os: cloud8
+    initialise: cloud
+    cores: 4
+    memory: 8192
+    disks:
+      vda: 80G
+    interfaces:
+      enp1s0: 
+        connection: 'bridge=br0'
+        bootproto: static
+        address: 192.168.2.21/24
+        gateway: 192.168.2.1
+    nameserver:
+      address:
+        - 192.168.2.1
+      search:
+        - mac.wales
+
+  node2:
+    hostname: node2
+    os: cloud8
+    initialise: cloud
+    cores: 4
+    memory: 8192
+    disks:
+      vda: 80G
+    interfaces:
+      enp1s0: 
+        connection: 'bridge=br0'
+        bootproto: static
+        address: 192.168.2.22/24
+        gateway: 192.168.2.1
+    nameserver:
+      address:
+        - 192.168.2.1
+      search:
+        - mac.wales
+
+  node3:
+    hostname: node3
+    os: cloud8
+    initialise: cloud
+    cores: 4
+    memory: 8192
+    disks:
+      vda: 80G
+    interfaces:
+      enp1s0: 
+        connection: 'bridge=br0'
+        bootproto: static
+        address: 192.168.2.23/24
+        gateway: 192.168.2.1
+    nameserver:
+      address:
+        - 192.168.2.1
+      search:
+        - mac.wales

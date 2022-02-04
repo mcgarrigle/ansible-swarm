@@ -1,0 +1,71 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+
+  - name: remove libvirt nameserver
+    lineinfile:
+      path: /etc/resolv.conf
+      regexp: '^nameserver 192.168.122.1'
+      state: absent
+
+  - name: firewalld is disabled
+    systemd: name=firewalld enabled=no state=stopped
+
+  - name: packages
+    yum:
+      name:
+      - container-selinux
+      - selinux-policy-base
+      state: present
+
+  - name: docker repo
+    copy:
+      src: ./files/docker-ce.repo
+      dest: /etc/yum.repos.d/
+      mode: preserve
+
+  - name: install docker components
+    yum:
+      name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      state: present
+
+  - name: docker service
+    service:
+      name: docker
+      state: started
+      enabled: true
+
+- hosts: managers
+  become: yes
+
+  tasks:
+
+  - name: get swarm state
+    shell: "{% raw %}docker info --format '{{.Swarm.LocalNodeState}}'{% endraw %}"
+    register: manager_state
+  
+  - name: swarm init
+    shell: "docker swarm init"
+    when: manager_state.stdout == "inactive"
+
+  - name: get worker token
+    shell: "docker swarm join-token worker|grep 'docker swarm'"
+    register: worker_join
+
+  - name: set token facts
+    set_fact:
+      worker_join_command: "{{ worker_join.stdout }}"
+
+- hosts: workers
+  become: yes
+
+  tasks:
+
+  - name: swarm join
+    command: "{{ hostvars['node1']['worker_join_command'] }}"
+
