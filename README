@@ -1,5 +1,12 @@
 BRING UP CLUSTER
 
-cloud up
-cloud inv > inventory.yaml
-ansible-playbook -i inventory.yaml docker-swarm.yaml
+  # cloud up
+  # cloud inventory > inventory.yaml
+
+or:
+
+  create virtualbox VMs and edit inventory.yaml
+
+then:
+
+  # ansible-playbook -i inventory.yaml docker-swarm.yaml

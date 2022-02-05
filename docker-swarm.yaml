@@ -41,7 +41,7 @@
       enabled: true
 
   - name: get swarm state
-    shell: "{% raw %}docker info --format '{{.Swarm.LocalNodeState}}'{% endraw %}"
+    command: "{% raw %}docker info --format '{{.Swarm.LocalNodeState}}'{% endraw %}"
     register: swarm_state
  
 - hosts: managers
@@ -49,17 +49,12 @@
 
   tasks:
 
-  - name: debug
-    debug:
-      var: manager_state
-      verbosity: 2
-
   - name: swarm init
-    shell: "docker swarm init"
+    command: "docker swarm init"
     when: swarm_state.stdout == "inactive"
 
   - name: get worker token
-    shell: "docker swarm join-token worker|grep 'docker swarm'"
+    shell: "docker swarm join-token worker | grep 'docker swarm'"
     register: worker_join
 
   - name: set token facts
@@ -74,4 +69,3 @@
   - name: swarm join
     command: "{{ hostvars['node1']['worker_join_command'] }}"
     when: swarm_state.stdout == "inactive"
-
