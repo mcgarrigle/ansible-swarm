@@ -10,8 +10,8 @@
       regexp: '^nameserver 192.168.122.1'
       state: absent
 
-  - name: firewalld is disabled
-    systemd: name=firewalld enabled=no state=stopped
+ #- name: firewalld is disabled
+ #  systemd: name=firewalld enabled=no state=stopped
 
   - name: packages
     yum:
@@ -50,7 +50,7 @@
   tasks:
 
   - name: swarm init
-    command: "docker swarm init"
+    command: "docker swarm init --advertise-addr {{ ansible_host }}"
     when: swarm_state.stdout == "inactive"
 
   - name: get worker token
