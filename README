@@ -9,4 +9,5 @@ or:
 
 then:
 
+  # ansible-galaxy collection install ansible.posix
   # ansible-playbook -i inventory.yaml docker-swarm.yaml

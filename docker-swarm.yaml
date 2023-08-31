@@ -13,11 +13,19 @@
  #- name: firewalld is disabled
  #  systemd: name=firewalld enabled=no state=stopped
 
+  - name: disable selinux
+    ansible.posix.selinux:
+      state: disabled
+
   - name: packages
     yum:
       name:
       - container-selinux
       - selinux-policy-base
+      - bash-completion
+      - tree
+      - vim
+      - git
       state: present
 
   - name: docker repo
