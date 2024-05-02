@@ -1,0 +1,11 @@
+- name: swarm init
+  command: "docker swarm init --advertise-addr {{ ansible_default_ipv4.address }}"
+  when: swarm_state.stdout == "inactive"
+
+- name: get worker token
+  shell: "docker swarm join-token worker | grep 'docker swarm'"
+  register: worker_join
+
+- name: set token facts
+  set_fact:
+    worker_join_command: "{{ worker_join.stdout }}"

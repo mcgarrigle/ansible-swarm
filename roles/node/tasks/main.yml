@@ -1,0 +1,37 @@
+# name: firewalld is disabled
+# systemd: name=firewalld enabled=no state=stopped
+
+- name: disable selinux
+  ansible.posix.selinux:
+    state: disabled
+
+- name: packages
+  yum:
+    name:
+    - container-selinux
+    - selinux-policy-base
+    state: present
+
+- name: docker repo
+  copy:
+    src: ./files/docker-ce.repo
+    dest: /etc/yum.repos.d/
+    mode: preserve
+
+- name: install docker components
+  yum:
+    name:
+    - docker-ce
+    - docker-ce-cli
+    - containerd.io
+    state: present
+
+- name: docker service
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: get swarm state
+  command: "{% raw %}docker info --format '{{.Swarm.LocalNodeState}}'{% endraw %}"
+  register: swarm_state
