@@ -1,0 +1,3 @@
+- name: swarm join
+  command: "{{ hostvars['node1']['worker_join_command'] }}"
+  when: swarm_state.stdout == "inactive"
