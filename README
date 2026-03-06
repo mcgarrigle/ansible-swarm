@@ -1,18 +1,18 @@
 BRING UP CLUSTER
 
   # cloud up
-  # cloud inventory > inventory.yaml
+  # cloud inventory > inventory.yml
 
 or:
 
-  create virtualbox VMs and edit inventory.yaml
+  create virtualbox VMs and edit inventory.yml
 
 ```
-ansible -i inventory.yaml all -b -a 'dnf update -y'          
-ansible -i inventory.yaml all -b -a 'reboot'
+ansible -i inventory.yml all -b -a 'dnf update -y'          
+ansible -i inventory.yml all -b -a 'reboot'
 ```
 then:
 
 ```
-ansible-playbook -i inventory.yaml site.yaml
+ansible-playbook -i inventory.yml site.yml
 ```
