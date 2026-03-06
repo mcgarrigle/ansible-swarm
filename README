@@ -7,7 +7,12 @@ or:
 
   create virtualbox VMs and edit inventory.yaml
 
+```
+ansible -i inventory.yaml all -b -a 'dnf update -y'          
+ansible -i inventory.yaml all -b -a 'reboot'
+```
 then:
 
-  # ansible-galaxy collection install ansible.posix
-  # ansible-playbook -i inventory.yaml docker-swarm.yaml
+```
+ansible-playbook -i inventory.yaml site.yaml
+```

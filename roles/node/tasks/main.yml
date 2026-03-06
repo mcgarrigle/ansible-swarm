@@ -10,7 +10,14 @@
     name:
     - container-selinux
     - selinux-policy-base
+    - kernel-modules-extra
     state: present
+
+- name: add xt_addrtype module
+  community.general.modprobe:
+    name: xt_addrtype
+    state: present
+    persistent: present
 
 - name: docker repo
   copy:
