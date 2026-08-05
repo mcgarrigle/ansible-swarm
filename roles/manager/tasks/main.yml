@@ -1,5 +1,5 @@
 - name: swarm init
-  command: "docker swarm init --advertise-addr {{ ansible_default_ipv4.address }}"
+  command: "docker swarm init --advertise-addr {{ ansible_facts['default_ipv4.address'] }}"
   when: swarm_state.stdout == "inactive"
 
 - name: get worker token

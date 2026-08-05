@@ -1,5 +1,6 @@
 all:
-
+  vars:
+    ansible_python_interpreter: auto_silent
   hosts:
     node1:
     node2:

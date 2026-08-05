@@ -1,14 +1,8 @@
 BRING UP CLUSTER
 
-  # cloud up
-  # cloud inventory > inventory.yml
-
-or:
-
-  create virtualbox VMs and edit inventory.yml
-
 ```
 ansible -i inventory.yml all -b -a 'dnf update -y'          
+ansible -i inventory.yml all -b -a 'dnf install -y kernel-modules-extra'
 ansible -i inventory.yml all -b -a 'reboot'
 ```
 then:
